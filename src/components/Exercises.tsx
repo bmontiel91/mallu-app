@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Exercise } from "@/lib/types";
 
@@ -315,6 +315,7 @@ export default function Exercises({
   const [failed, setFailed] = useState(false);
   const [shuffledOptions, setShuffledOptions] = useState<string[][]>([]);
   const [optionsInitialized, setOptionsInitialized] = useState(false);
+  const answeredRef = useRef(false);
 
   /* ── shuffle inicial ── */
   if (!optionsInitialized) {
@@ -330,7 +331,8 @@ export default function Exercises({
 
   const handleMatchSelect = useCallback(
     (option: string) => {
-      if (showingFeedback || failed) return;
+      if (answeredRef.current || showingFeedback || failed) return;
+      answeredRef.current = true;
       setSelected(option);
       const correct =
         option.toLowerCase().trim() ===
@@ -348,7 +350,8 @@ export default function Exercises({
 
   const handleSelect = useCallback(
     (option: string) => {
-      if (showingFeedback || failed) return;
+      if (answeredRef.current || showingFeedback || failed) return;
+      answeredRef.current = true;
       setSelected(option);
       const correct =
         option.toLowerCase().trim() ===
@@ -366,7 +369,8 @@ export default function Exercises({
 
   const handleComplete = useCallback(
     (option: string) => {
-      if (showingFeedback || failed) return;
+      if (answeredRef.current || showingFeedback || failed) return;
+      answeredRef.current = true;
       setSelected(option);
       const correct =
         option.toLowerCase().trim() ===
@@ -399,7 +403,8 @@ export default function Exercises({
   );
 
   const handleArrangeSubmit = useCallback(() => {
-    if (showingFeedback || failed || arrangedWords.length === 0) return;
+    if (answeredRef.current || showingFeedback || failed || arrangedWords.length === 0) return;
+    answeredRef.current = true;
     const userAnswer = arrangedWords.join(" ");
     const correct =
       userAnswer.toLowerCase().trim() ===
@@ -419,6 +424,7 @@ export default function Exercises({
   }, [showingFeedback, failed]);
 
   const advanceExercise = useCallback(() => {
+    answeredRef.current = false;
     if (hearts <= 0) {
       setFailed(true);
       return;

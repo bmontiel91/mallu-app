@@ -49,6 +49,17 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const [isOnboarded, setIsOnboarded] = useState(false);
   const [hydrated, setHydrated] = useState(false);
 
+  const getStorageKey = useCallback((base: string): string => {
+    try {
+      const userData = localStorage.getItem("mallu-user");
+      if (userData) {
+        const user = JSON.parse(userData);
+        return `${base}-${user.username}`;
+      }
+    } catch {}
+    return base;
+  }, []);
+
   const getSubTrackOptions = (): Record<string, { name: string; icon: string }> => {
     if (!activeTrack) return {};
     if (activeTrack === "languages") return languageSubTracks;
@@ -57,20 +68,24 @@ export function GameProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    const saved = localStorage.getItem("mallu-progress");
+    const pKey = getStorageKey("mallu-progress");
+    const saved = localStorage.getItem(pKey);
     if (saved) setProgress(JSON.parse(saved));
-    const onboarded = localStorage.getItem("mallu-onboarded");
+    const oKey = getStorageKey("mallu-onboarded");
+    const onboarded = localStorage.getItem(oKey);
     if (onboarded) setIsOnboarded(true);
-    const track = localStorage.getItem("mallu-track");
+    const tKey = getStorageKey("mallu-track");
+    const track = localStorage.getItem(tKey);
     if (track) setActiveTrack(track as TrackType);
-    const subTrack = localStorage.getItem("mallu-subtrack");
+    const sKey = getStorageKey("mallu-subtrack");
+    const subTrack = localStorage.getItem(sKey);
     if (subTrack) setActiveSubTrack(subTrack as SubTrack);
     setHydrated(true);
-  }, []);
+  }, [getStorageKey]);
 
   const saveProgress = useCallback((p: UserProgress) => {
-    localStorage.setItem("mallu-progress", JSON.stringify(p));
-  }, []);
+    localStorage.setItem(getStorageKey("mallu-progress"), JSON.stringify(p));
+  }, [getStorageKey]);
 
   const checkStreak = useCallback((p: UserProgress): UserProgress => {
     const today = new Date().toISOString().split("T")[0];
@@ -128,24 +143,24 @@ export function GameProvider({ children }: { children: ReactNode }) {
     setActiveTrack(track);
     const defaultSub = defaultSubTracks[track];
     setActiveSubTrack(defaultSub);
-    localStorage.setItem("mallu-track", track);
-    localStorage.setItem("mallu-subtrack", defaultSub);
-  }, []);
+    localStorage.setItem(getStorageKey("mallu-track"), track);
+    localStorage.setItem(getStorageKey("mallu-subtrack"), defaultSub);
+  }, [getStorageKey]);
 
   const selectSubTrack = useCallback((subTrack: SubTrack) => {
     setActiveSubTrack(subTrack);
-    localStorage.setItem("mallu-subtrack", subTrack);
-  }, []);
+    localStorage.setItem(getStorageKey("mallu-subtrack"), subTrack);
+  }, [getStorageKey]);
 
   const finishOnboarding = useCallback((track: TrackType) => {
     setIsOnboarded(true);
     setActiveTrack(track);
     const defaultSub = defaultSubTracks[track];
     setActiveSubTrack(defaultSub);
-    localStorage.setItem("mallu-onboarded", "true");
-    localStorage.setItem("mallu-track", track);
-    localStorage.setItem("mallu-subtrack", defaultSub);
-  }, []);
+    localStorage.setItem(getStorageKey("mallu-onboarded"), "true");
+    localStorage.setItem(getStorageKey("mallu-track"), track);
+    localStorage.setItem(getStorageKey("mallu-subtrack"), defaultSub);
+  }, [getStorageKey]);
 
   return (
     <GameContext.Provider

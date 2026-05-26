@@ -53,7 +53,6 @@ export default function Onboarding() {
   const handleStart = () => {
     if (selectedTrack && selectedSubTrack) {
       finishOnboarding(selectedTrack);
-      localStorage.setItem("mallu-subtrack", selectedSubTrack);
       router.push("/home");
     }
   };
