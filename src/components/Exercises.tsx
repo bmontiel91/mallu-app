@@ -215,15 +215,15 @@ function OptionButton({
 
   return (
     <motion.button
-      {...buttonStagger(index)}
+      initial={buttonStagger(index).initial}
       whileHover={!disabled ? { scale: 1.02 } : {}}
       whileTap={!disabled ? { scale: 0.97 } : {}}
       animate={
         isSelected && isCorrect === false && !isCorrectAnswer
-          ? shakeKeyframes
+          ? { ...shakeKeyframes, ...buttonStagger(index).animate }
           : isSelected && isCorrect === true && isCorrectAnswer
-            ? { scale: [1, 1.08, 0.96, 1.02, 1] }
-            : {}
+            ? { scale: [1, 1.08, 0.96, 1.02, 1], opacity: 1, y: 0 }
+            : buttonStagger(index).animate
       }
       transition={
         isSelected && isCorrect === false && !isCorrectAnswer
