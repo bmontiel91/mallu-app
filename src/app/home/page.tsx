@@ -5,6 +5,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useGame } from "@/lib/gameState";
+import { useAuth } from "@/lib/authContext";
 import { trackNames, lessonsData } from "@/lib/data";
 import { TrackType, SubTrack } from "@/lib/types";
 import Mascot from "@/components/Mascot";
@@ -35,7 +36,7 @@ export default function HomePage() {
     selectSubTrack,
     subTrackOptions,
   } = useGame();
-
+  const { user, logout } = useAuth();
   const [showTrackSelector, setShowTrackSelector] = useState(false);
   const [showSubTrackSelector, setShowSubTrackSelector] = useState(false);
 
@@ -253,6 +254,13 @@ export default function HomePage() {
                 <span className="text-xs font-extrabold">{progress.coins}</span>
               </div>
               <HeartDisplay hearts={progress.hearts} maxHearts={progress.maxHearts} />
+              <button
+                onClick={() => { logout(); router.push("/login"); }}
+                className="ml-1 px-2 py-1 rounded-lg bg-white/15 hover:bg-white/25 transition-colors text-xs font-bold"
+                title="Cerrar sesión"
+              >
+                🚪
+              </button>
             </div>
           </div>
 

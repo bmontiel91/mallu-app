@@ -16,12 +16,15 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
+const storage = typeof window !== "undefined" ? sessionStorage : null;
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const saved = localStorage.getItem("mallu-user");
+    if (!storage) { setLoading(false); return; }
+    const saved = storage.getItem("mallu-user");
     if (saved) setUser(JSON.parse(saved));
     setLoading(false);
   }, []);
@@ -35,13 +38,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!res.ok) return false;
     const data = await res.json();
     setUser(data);
-    localStorage.setItem("mallu-user", JSON.stringify(data));
+    if (storage) storage.setItem("mallu-user", JSON.stringify(data));
     return true;
   };
 
   const logout = () => {
+    const currentUser = user;
     setUser(null);
-    localStorage.removeItem("mallu-user");
+    if (storage) {
+      storage.removeItem("mallu-user");
+      if (currentUser) {
+        const keys = [
+          `mallu-progress-${currentUser.username}`,
+          `mallu-onboarded-${currentUser.username}`,
+          `mallu-track-${currentUser.username}`,
+          `mallu-subtrack-${currentUser.username}`,
+        ];
+        keys.forEach(k => storage.removeItem(k));
+        localStorage.removeItem("mallu-user");
+      }
+    }
   };
 
   return (

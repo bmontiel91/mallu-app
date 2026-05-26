@@ -51,7 +51,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
   const getStorageKey = useCallback((base: string): string => {
     try {
-      const userData = localStorage.getItem("mallu-user");
+      const userData = sessionStorage.getItem("mallu-user") || localStorage.getItem("mallu-user");
       if (userData) {
         const user = JSON.parse(userData);
         return `${base}-${user.username}`;
