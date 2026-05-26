@@ -314,15 +314,13 @@ export default function Exercises({
   const [correctCount, setCorrectCount] = useState(0);
   const [failed, setFailed] = useState(false);
   const [shuffledOptions, setShuffledOptions] = useState<string[][]>([]);
-  const [optionsInitialized, setOptionsInitialized] = useState(false);
   const answeredRef = useRef(false);
 
   /* ── shuffle inicial ── */
-  if (!optionsInitialized) {
+  if (shuffledOptions.length === 0 && exercises.length > 0) {
     setShuffledOptions(
       exercises.map((ex) => [...ex.options].sort(() => Math.random() - 0.5))
     );
-    setOptionsInitialized(true);
   }
 
   const exercise = exercises[current];
@@ -454,10 +452,21 @@ export default function Exercises({
 
   if (!exercise) return null;
 
-  const options = shuffledOptions[current] || exercise.options;
+  const options = shuffledOptions[current] || exercise.options || [];
   const arrangedPoolWords = options.filter(
     (w) => !arrangedWords.includes(w)
   );
+
+  /* ── Fallback de seguridad: si no hay opciones, mostrar error ── */
+  if (options.length === 0 && exercise.options.length > 0) {
+    return (
+      <div className="text-center py-16">
+        <p className="text-text-secondary font-semibold">
+          Cargando opciones...
+        </p>
+      </div>
+    );
+  }
 
   /* ── Render ── */
 
