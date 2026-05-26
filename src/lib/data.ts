@@ -1879,7 +1879,7 @@ const japaneseLessons: Lesson[] = [
         {
           "id": "ja1-e1",
           "type": "match",
-          "prompt": "Empareja con su sonido",
+          "prompt": "¿Cómo se lee este carácter?",
           "options": [
             "a",
             "i",
@@ -1893,7 +1893,7 @@ const japaneseLessons: Lesson[] = [
         {
           "id": "ja1-e2",
           "type": "match",
-          "prompt": "Empareja con su sonido",
+          "prompt": "¿Cómo se lee este carácter?",
           "options": [
             "i",
             "a",
@@ -2028,7 +2028,7 @@ const japaneseLessons: Lesson[] = [
         {
           "id": "ja2-e1",
           "type": "match",
-          "prompt": "Empareja con su sonido",
+          "prompt": "¿Cómo se lee este carácter?",
           "options": [
             "ka",
             "ki",
@@ -2056,7 +2056,7 @@ const japaneseLessons: Lesson[] = [
         {
           "id": "ja2-e3",
           "type": "match",
-          "prompt": "Empareja con su sonido",
+          "prompt": "¿Cómo se lee este carácter?",
           "options": [
             "ko",
             "ka",
@@ -2177,7 +2177,7 @@ const japaneseLessons: Lesson[] = [
         {
           "id": "ja3-e1",
           "type": "match",
-          "prompt": "Empareja con su sonido",
+          "prompt": "¿Cómo se lee este carácter?",
           "options": [
             "sa",
             "shi",
@@ -2205,7 +2205,7 @@ const japaneseLessons: Lesson[] = [
         {
           "id": "ja3-e3",
           "type": "match",
-          "prompt": "Empareja con su sonido",
+          "prompt": "¿Cómo se lee este carácter?",
           "options": [
             "shi",
             "sa",
@@ -2325,7 +2325,7 @@ const japaneseLessons: Lesson[] = [
         {
           "id": "ja4-e1",
           "type": "match",
-          "prompt": "Empareja con su sonido",
+          "prompt": "¿Cómo se lee este carácter?",
           "options": [
             "chi",
             "ta",
@@ -2353,7 +2353,7 @@ const japaneseLessons: Lesson[] = [
         {
           "id": "ja4-e3",
           "type": "match",
-          "prompt": "Empareja con su sonido",
+          "prompt": "¿Cómo se lee este carácter?",
           "options": [
             "tsu",
             "ta",
@@ -2800,7 +2800,7 @@ const koreanLessons: Lesson[] = [
         {
           "id": "ko1-e1",
           "type": "match",
-          "prompt": "Empareja con su sonido",
+          "prompt": "¿Cómo se lee este carácter?",
           "options": [
             "a",
             "eo",
@@ -2814,7 +2814,7 @@ const koreanLessons: Lesson[] = [
         {
           "id": "ko1-e2",
           "type": "match",
-          "prompt": "Empareja con su sonido",
+          "prompt": "¿Cómo se lee este carácter?",
           "options": [
             "n",
             "g/k",
@@ -2828,7 +2828,7 @@ const koreanLessons: Lesson[] = [
         {
           "id": "ko1-e3",
           "type": "match",
-          "prompt": "Empareja con su lectura",
+          "prompt": "¿Cuál es su lectura?",
           "options": [
             "na",
             "ga",
@@ -2949,7 +2949,7 @@ const koreanLessons: Lesson[] = [
         {
           "id": "ko2-e1",
           "type": "match",
-          "prompt": "Empareja con su sonido",
+          "prompt": "¿Cómo se lee este carácter?",
           "options": [
             "j",
             "d/t",
@@ -2977,7 +2977,7 @@ const koreanLessons: Lesson[] = [
         {
           "id": "ko2-e3",
           "type": "match",
-          "prompt": "Empareja con su sonido",
+          "prompt": "¿Cómo se lee este carácter?",
           "options": [
             "r/l",
             "d/t",
@@ -3127,7 +3127,7 @@ const koreanLessons: Lesson[] = [
         {
           "id": "ko3-e3",
           "type": "match",
-          "prompt": "Empareja con su lectura",
+          "prompt": "¿Cuál es su lectura?",
           "options": [
             "mul",
             "gogi",
