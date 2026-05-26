@@ -319,9 +319,14 @@ export default function Exercises({
   /* ── shuffle inicial ── */
   if (shuffledOptions.length === 0 && exercises.length > 0) {
     const shuffled = exercises.map((ex) => {
+      if (!ex.options || ex.options.length === 0) {
+        console.error('[Exercises] Exercise missing options:', ex.id);
+        return [];
+      }
       const opts = [...ex.options].sort(() => Math.random() - 0.5);
       return opts;
     });
+    console.log('[Exercises] Initializing shuffledOptions:', shuffled.length, 'exercises');
     setShuffledOptions(shuffled);
   }
 
@@ -454,14 +459,16 @@ export default function Exercises({
 
   if (!exercise) return null;
 
-  const options = shuffledOptions[current] || exercise.options || [];
+  const options = shuffledOptions[current] && shuffledOptions[current].length > 0 
+    ? shuffledOptions[current] 
+    : exercise.options || [];
   const arrangedPoolWords = options.filter(
     (w) => !arrangedWords.includes(w)
   );
 
   // DEBUG
   if (process.env.NODE_ENV === 'development') {
-    console.log('[Exercises] current:', current, 'exercise.type:', exercise.type, 'exercise.options:', exercise.options, 'shuffledOptions[current]:', shuffledOptions[current], 'options:', options);
+    console.log('[Exercises] current:', current, 'exercise.type:', exercise.type, 'exercise.options:', exercise.options, 'shuffledOptions[current]:', shuffledOptions[current], 'options:', options, 'shuffledOptions.length:', shuffledOptions.length);
   }
 
   /* ── Fallback de seguridad: si no hay opciones, mostrar error ── */
@@ -471,6 +478,15 @@ export default function Exercises({
         <p className="text-text-secondary font-semibold">
           Cargando opciones...
         </p>
+      </div>
+    );
+  }
+  
+  if (options.length === 0) {
+    return (
+      <div className="text-center py-16">
+        <p className="text-error font-semibold">Error: ejercicio sin opciones</p>
+        <p className="text-text-secondary text-sm mt-2">Exercise ID: {exercise.id}</p>
       </div>
     );
   }
