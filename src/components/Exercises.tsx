@@ -318,9 +318,11 @@ export default function Exercises({
 
   /* ── shuffle inicial ── */
   if (shuffledOptions.length === 0 && exercises.length > 0) {
-    setShuffledOptions(
-      exercises.map((ex) => [...ex.options].sort(() => Math.random() - 0.5))
-    );
+    const shuffled = exercises.map((ex) => {
+      const opts = [...ex.options].sort(() => Math.random() - 0.5);
+      return opts;
+    });
+    setShuffledOptions(shuffled);
   }
 
   const exercise = exercises[current];
@@ -456,6 +458,11 @@ export default function Exercises({
   const arrangedPoolWords = options.filter(
     (w) => !arrangedWords.includes(w)
   );
+
+  // DEBUG
+  if (process.env.NODE_ENV === 'development') {
+    console.log('[Exercises] current:', current, 'exercise.type:', exercise.type, 'exercise.options:', exercise.options, 'shuffledOptions[current]:', shuffledOptions[current], 'options:', options);
+  }
 
   /* ── Fallback de seguridad: si no hay opciones, mostrar error ── */
   if (options.length === 0 && exercise.options.length > 0) {
